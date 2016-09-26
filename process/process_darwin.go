@@ -43,10 +43,31 @@ type MemoryInfoExStat struct {
 type MemoryMapsStat struct {
 }
 
+// Pids get all pids
 func Pids() ([]int32, error) {
 	var ret []int32
 
 	pids, err := callPs("pid", 0, false)
+	if err != nil {
+		return ret, err
+	}
+
+	for _, pid := range pids {
+		v, err := strconv.Atoi(pid[0])
+		if err != nil {
+			return ret, err
+		}
+		ret = append(ret, int32(v))
+	}
+
+	return ret, nil
+}
+
+//Pid get pid info by pid
+func Pid(pid int32) ([]int32, error) {
+	var ret []int32
+
+	pids, err := callPs("pid", pid, true)
 	if err != nil {
 		return ret, err
 	}
