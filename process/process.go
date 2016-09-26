@@ -90,22 +90,6 @@ func (p NumCtxSwitchesStat) String() string {
 	return string(s)
 }
 
-//PidExists check is pid exist  change by feng ignore Z status
-func PidExists(pid int32) (bool, error) {
-	pids, err := Pid(pid)
-	if err != nil {
-		return false, err
-	}
-
-	for _, i := range pids {
-		if i == pid {
-			return true, err
-		}
-	}
-
-	return false, err
-}
-
 // Percent : If interval is 0, return difference from last call(non-blocking).
 // If interval > 0, wait interval sec and return diffrence between start and end.
 func (p *Process) Percent(interval time.Duration) (float64, error) {
